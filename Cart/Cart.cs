@@ -2,7 +2,7 @@
 
 namespace CartApp
 {
-    public class Cart :Discount
+    public class Cart 
     {
         List<CartItem> cartItemList = new List<CartItem>();
         PriceCalculator priceCalculator = new PriceCalculator();
@@ -10,6 +10,7 @@ namespace CartApp
 
         public void AddItemToCart(CartItem cartItem)
         {
+            
             cartItem.TotalPrice = priceCalculator.GetTotalProductPrice(cartItem.Item, cartItem.Quantity);
             cartItemList.Add(cartItem);
             
@@ -19,7 +20,7 @@ namespace CartApp
             return cartItemList;
         }
 
-        public override double GetDiscountedPrice(double discountPercent)
+        public  double GetDiscountedPrice(double discountPercent)
         {
             double totalPrice = GetTotalPrice();
             double discountedPrice = totalPrice - totalPrice * discountPercent / 100;
