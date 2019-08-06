@@ -22,7 +22,9 @@ namespace CartTests
         {
             Mobile mobile = new Mobile();
             CartItem cartItem = new CartItem();
-            Cart cart = new Cart();
+            DiscountConfiguration discountConfiguration = new DiscountConfiguration();
+            discountConfiguration.SetDiscountForCart(0);
+            Cart cart = new Cart(discountConfiguration);
             cartItem.Item = mobile;
             cartItem.Quantity = 10;
             cart.AddItemToCart(cartItem);
@@ -37,7 +39,9 @@ namespace CartTests
         {
             Mobile mobile = new Mobile();
             CartItem cartItem = new CartItem();
-            Cart cart = new Cart();
+            DiscountConfiguration discountConfiguration = new DiscountConfiguration();
+            discountConfiguration.SetDiscountForCart(0);
+            Cart cart = new Cart(discountConfiguration);
             cartItem.Item = mobile;
             cartItem.Quantity = 10;
             cart.AddItemToCart(cartItem);
@@ -49,11 +53,54 @@ namespace CartTests
         {
             Mobile mobile = new Mobile();
             CartItem cartItem = new CartItem();
-            Cart cart = new Cart();
+            DiscountConfiguration discountConfiguration = new DiscountConfiguration();
+            discountConfiguration.SetDiscountForCart(10);
+            Cart cart = new Cart(discountConfiguration);
             cartItem.Item = mobile;
             cartItem.Quantity = 10;
             cart.AddItemToCart(cartItem);
-            Assert.Equal(900, cart.GetDiscountedPrice(10));
+            Assert.Equal(900, cart.GetTotalPrice());
+        }
+
+        [Fact]
+        public void EnumTest()
+        {
+            Product product = new Mobile();
+            Assert.Equal(Category.Electronics,product.category);
+        }
+
+        [Fact]
+        public void CategoryDiscountTest()
+        {
+            Mobile mobile = new Mobile();
+            CartItem cartItem = new CartItem();
+            DiscountConfiguration discountConfiguration = new DiscountConfiguration();
+            discountConfiguration.SetDiscountForCategory(Category.Electronics, 5);
+            Cart cart = new Cart(discountConfiguration);
+            cartItem.Item = mobile;
+            cartItem.Quantity = 10;
+            cart.AddItemToCart(cartItem);
+            Assert.Equal(950, cart.GetTotalPrice());
+        }
+        [Fact]
+        public void CompositeDiscountTest()
+        {
+            Mobile mobile = new Mobile();
+            Cheese cheese = new Cheese();
+            CartItem cartItem = new CartItem();
+            DiscountConfiguration discountConfiguration = new DiscountConfiguration();
+            discountConfiguration.SetDiscountForCategory(Category.Electronics, 5);
+            Cart cart = new Cart(discountConfiguration);
+            cartItem.Item = mobile;
+            cartItem.Quantity = 10;
+            cart.AddItemToCart(cartItem);
+            discountConfiguration.SetDiscountForCategory(Category.Dairy, 50);
+            cartItem = new CartItem();
+            cartItem.Item = cheese;
+            cartItem.Quantity = 10;
+            cart.AddItemToCart(cartItem);
+            discountConfiguration.SetDiscountForCart(10);
+            Assert.Equal(900, cart.GetTotalPrice());
         }
     }
 }
