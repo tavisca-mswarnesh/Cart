@@ -25,7 +25,7 @@ pipeline {
     post {
         success{
 		
-            step(archiveArtifacts artifacts: '**', fingerprint: true)
+            archiveArtifacts artifacts: '**', fingerprint: true
             
         }
     }
