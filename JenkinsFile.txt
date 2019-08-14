@@ -25,10 +25,8 @@ pipeline {
     }
     post {
         success{
-	   stage('Artifact')	
-	   {
-           	 step(archiveArtifacts artifacts: '**', fingerprint: true)
-		}
+	   archiveArtifacts artifacts: '**', fingerprint: true
+	   sh 'dotnet Cart/bin/Debug/netcoreapp2.2/CartApp.dll'
 		
             
         }
