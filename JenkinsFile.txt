@@ -25,7 +25,7 @@ pipeline {
     post {
         success{
 		
-            archiveArtifacts artifacts: '**', fingerprint: true
+            step(archiveArtifacts artifacts: '**', fingerprint: true)
             step([$class: 'CopyArtifact', fingerprintArtifacts: true, flatten: true, projectName: 'SwarneshCart', selector: [$class: 'LatestSuccessfulBuild'], target: 'SwarneshCartOutput'])
         }
     }
