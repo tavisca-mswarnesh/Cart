@@ -27,8 +27,8 @@ pipeline {
         success{
 	   stage('Artifact')	
 	   {
-           	 archiveArtifacts artifacts: 'artifact.zip', fingerprint: true
-	   }
+           	 step(archiveArtifacts artifacts: '**', fingerprint: true)
+		}
 		
             
         }
