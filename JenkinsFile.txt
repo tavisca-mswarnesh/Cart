@@ -1,0 +1,19 @@
+Jenkinsfile (Declarative Pipeline)
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'dotnet build CartApp.sln -p:configuration=release -v:n'
+                echo "Building......."
+            }
+        }
+	stage('Test') {
+            steps {
+                sh 'dotnet test'
+                echo "Testing.........."
+            }
+        }
+    }
+}
