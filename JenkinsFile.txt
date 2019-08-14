@@ -21,16 +21,14 @@ pipeline {
                 echo "Testing.........."
             }
         }
-	stage('Zip')
-	{
-		sh 'zip -r artifact.zip Cart/bin/Debug/netcoreapp2.2'
-	}
+	
     }
     post {
         success{
-	   stage('	
-		
-            archiveArtifacts artifacts: 'artifact.zip', fingerprint: true
+	   stage('Artifact')	
+	   {
+           	 archiveArtifacts artifacts: 'artifact.zip', fingerprint: true
+	   }
 		
             
         }
